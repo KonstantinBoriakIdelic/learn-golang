@@ -1,34 +1,23 @@
 package main
 
 import (
-	"log"
 	"os"
 
 	"github.com/gin-gonic/gin"
-
-	"github.com/idelic-inc/learn-golang/aws"
-	"github.com/idelic-inc/learn-golang/handler"
 )
 
 func main() {
-	r := gin.Default()
+	port := os.Getenv("PORT")
 
-	uploader, err := aws.NewS3Uploader()
-
-	if err != nil {
-		log.Printf("Could not connect to S3: %s\n", err)
-		os.Exit(1)
+	if port == "" {
+		port = "5000"
 	}
 
-	r.GET("/status", func(c *gin.Context) {
+	router := gin.Default()
+
+	router.GET("/status", func(c *gin.Context) {
 		c.JSON(200, gin.H{"response": "Learn Golang application is running"})
 	})
 
-	// Routes
-	r.POST("/images/upload", func(c *gin.Context) {
-		handler.ImageUpload(c, uploader)
-	})
-
-	// Listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
-	r.Run()
+	router.Run(":" + port)
 }
