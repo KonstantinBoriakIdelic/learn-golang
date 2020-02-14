@@ -40,7 +40,7 @@ func uploadFile(uploader *s3manager.Uploader, fileHeader *multipart.FileHeader) 
 	}
 	defer file.Close()
 
-	bucketName := "golang-learn"
+	bucketName := "golang-learn-kboriak"
 	keyName := fileHeader.Filename
 
 	upParams := &s3manager.UploadInput{

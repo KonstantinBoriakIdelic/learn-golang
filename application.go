@@ -20,6 +20,10 @@ func main() {
 		os.Exit(1)
 	}
 
+	r.GET("/status", func(c *gin.Context) {
+		c.JSON(200, gin.H{"response": "Learn Golang application is running"})
+	})
+
 	// Routes
 	r.POST("/images/upload", func(c *gin.Context) {
 		handler.ImageUpload(c, uploader)
